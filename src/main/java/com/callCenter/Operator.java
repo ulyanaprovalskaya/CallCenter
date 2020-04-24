@@ -43,10 +43,12 @@ public class Operator extends Thread {
         LOGGER.info("Operator " + number + " finished dialog with client " + client.getNumber());
         currentClient = null;
         isFree = true;
+
+        callCenter.decrementClientsToServe();
     }
 
     private boolean canTakeMore(){
-        if(callCenter.getClients().size() != 0) return true;
+        if(callCenter.getClients().size() != 0 && callCenter.getClientsToServe() > 0) return true;
         return false;
     }
 
@@ -61,11 +63,15 @@ public class Operator extends Thread {
 
                while (canTakeMore()) {
                    if (currentClient == null) {
-                       currentClient = callCenter.getClients().poll();
-                       currentClient.startDialog();
-                   }
-                   if (callCenter.getClientsToServe() < 1 || currentClient == null) {
-                       LOGGER.info("Queue is empty, operator " + number + " is waiting");
+
+                       if ((currentClient = callCenter.getClients().poll()) != null) {
+                           currentClient.startDialog();
+                           callCenter.decrementClientsToServe();
+                       }
+
+                       else {
+                           LOGGER.info("Queue is empty, operator " + number + " is waiting");
+                       }
                    }
                }
 

@@ -70,8 +70,6 @@ public class Client extends Thread {
             LOGGER.info("Client " + number + " is waiting for free operator in the queue");
             callCenter.getClients().offer(this);
         }
-
-        callCenter.decrementClientsToServe();
     }
 
     public void startDialog(){

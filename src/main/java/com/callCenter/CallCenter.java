@@ -18,22 +18,26 @@ public class CallCenter {
         return clients;
     }
 
-    public int getClientsToServe() {
-        return clientsToServe;
-    }
-
     public List<Operator> getOperators() {
         return operators;
     }
 
-    public CallCenter(int clientsAmount){
+    public int getClientsToServe() {
+        return clientsToServe;
+    }
+
+    public void setClientsToServe(int clientsToServe) {
+        this.clientsToServe = clientsToServe;
+    }
+    public CallCenter(){
         operators = new ArrayList<Operator>();
-        clients = new ArrayBlockingQueue<Client>(clientsAmount,true);
-        clientsToServe = clientsAmount;
+        clients = new ArrayBlockingQueue<Client>(100,true);
         LOGGER.info("Call-center started working");
     }
 
-    public int decrementClientsToServe(){
-        return --clientsToServe;
+    public void decrementClientsToServe(){
+        clientsToServe--;
     }
+
+
 }
