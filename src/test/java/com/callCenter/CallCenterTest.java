@@ -10,9 +10,9 @@ public class CallCenterTest {
 
     @Test
     public void Run() throws InterruptedException{
-        CallCenter callCenter = new CallCenter(10);
+        CallCenter callCenter = new CallCenter();
 
-        for (int i = 1; i <= 1; i++) {
+        for (int i = 1; i <= 3; i++) {
             callCenter.getOperators().add(new Operator(i, callCenter));
         }
 
